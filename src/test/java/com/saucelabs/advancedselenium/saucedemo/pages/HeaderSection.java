@@ -5,13 +5,14 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import com.saucelabs.advancedselenium.saucedemo.elements.Element;
 
 import java.util.List;
 import java.util.function.Function;
 
 public class HeaderSection extends BasePage {
-    private final By menuButton = By.id("react-burger-menu-btn");
-    private final By logoutLink = By.id("logout_sidebar_link");
+    private final Element menuButton = new Element(driver, By.id("react-burger-menu-btn"));
+    private final Element logoutLink = new Element(driver, By.id("logout_sidebar_link"));
     private final By shoppingCartBadge = By.className("shopping_cart_badge");
 
     public HeaderSection(RemoteWebDriver driver) {
@@ -42,7 +43,7 @@ public class HeaderSection extends BasePage {
     }
 
     private void logOut() {
-        click(menuButton);
-        click(logoutLink);
+        menuButton.click();
+        logoutLink.click();
     }
 }

@@ -5,13 +5,14 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import com.saucelabs.advancedselenium.saucedemo.elements.Element;
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
 public class CartPage extends BasePage {
-    private final By checkoutButton = By.cssSelector("button[data-test='checkout']");
+    private final Element checkoutButton = new Element(driver, By.cssSelector("button[data-test='checkout']"));
     private final By removeItemButton = By.cssSelector("button[data-test^='remove-']");
 
     public CartPage(RemoteWebDriver driver) {
@@ -19,7 +20,7 @@ public class CartPage extends BasePage {
     }
 
     public void checkout() {
-        click(checkoutButton);
+        checkoutButton.click();
     }
 
     public void removeItemSuccessfully() {

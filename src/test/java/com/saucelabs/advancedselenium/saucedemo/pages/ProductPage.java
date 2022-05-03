@@ -4,13 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import com.saucelabs.advancedselenium.saucedemo.elements.Element;
 
-import java.util.Objects;
 import java.util.function.Function;
 
 public class ProductPage extends BasePage {
-    private final By addToCartButton = By.cssSelector("button[data-test^='add-to-cart-']");
-    private final By removeFromCartButton = By.cssSelector("button[data-test^='remove']");
+    private final Element addToCartButton = new Element(driver, By.cssSelector("button[data-test^='add-to-cart-']"));
+    private final Element removeFromCartButton = new Element(driver, By.cssSelector("button[data-test^='remove']"));
 
     public ProductPage(RemoteWebDriver driver) {
         super(driver);
@@ -21,7 +21,7 @@ public class ProductPage extends BasePage {
         Integer before = headerSection.getNumberItemsInCart();
         Integer expected = before + 1;
 
-        click(addToCartButton);
+        addToCartButton.click();
 
         try {
             wait.until((Function<WebDriver, Object>) driver -> expected.equals(headerSection.getNumberItemsInCart()));
@@ -37,7 +37,7 @@ public class ProductPage extends BasePage {
         Integer before = headerSection.getNumberItemsInCart();
         Integer expected = before - 1;
 
-        click(removeFromCartButton);
+        removeFromCartButton.click();
 
         try {
             wait.until((Function<WebDriver, Object>) driver -> expected.equals(headerSection.getNumberItemsInCart()));

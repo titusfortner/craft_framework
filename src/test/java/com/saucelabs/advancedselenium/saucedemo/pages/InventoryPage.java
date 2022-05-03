@@ -5,6 +5,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import com.saucelabs.advancedselenium.saucedemo.elements.Element;
 
 import java.util.List;
 import java.util.Random;
@@ -12,8 +13,8 @@ import java.util.function.Function;
 
 public class InventoryPage extends BasePage {
     public static final String URL = "https://www.saucedemo.com/inventory.html";
-    private final By item1Link = By.id("item_1_title_link");
-    private final By shoppingCartLink = By.className("shopping_cart_link");
+    private final Element item1Link = new Element(driver, By.id("item_1_title_link"));
+    private final Element shoppingCartLink = new Element(driver, By.className("shopping_cart_link"));
     private final By addItemButton = By.cssSelector("button[data-test^='add-to-cart-']");
     private final By removeItemButton = By.cssSelector("button[data-test^='remove-']");
 
@@ -22,11 +23,11 @@ public class InventoryPage extends BasePage {
     }
 
     public void viewBoltTShirtProduct() {
-        click(item1Link);
+        item1Link.click();
     }
 
     public void goToCart() {
-        click(shoppingCartLink);
+        shoppingCartLink.click();
     }
 
     public void addItemSuccessfully() {
