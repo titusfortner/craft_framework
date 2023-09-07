@@ -1,11 +1,29 @@
 package com.titusfortner.craft_framework.tests;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class JourneyTest {
+    WebDriver driver;
+
+    @BeforeEach
+    public void setup() {
+        driver = new ChromeDriver();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        driver.quit();
+    }
 
     @Test
-    public void userJourney() {
+    public void userJourney() throws InterruptedException {
         // Go to Sauce Demo Site
         // Attempt Sign in with locked user
         // Validate error
