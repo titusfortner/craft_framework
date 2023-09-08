@@ -1,9 +1,6 @@
 package com.titusfortner.craft_framework.elements;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,6 +11,7 @@ public class Element {
     private final By locator;
     private final WebDriverWait wait;
     private final WebDriver driver;
+    private WebElement cachedElement;
 
     public Element(RemoteWebDriver driver, By locator) {
         this.driver = driver;
@@ -22,21 +20,47 @@ public class Element {
         wait.ignoreAll(List.of(ElementNotInteractableException.class, NoSuchElementException.class));
     }
 
+    // Does not wait
     public boolean isDisplayed() {
-        return driver.findElement(locator).isDisplayed();
+        return getElement().isDisplayed();
     }
 
     public void sendKeys(String value) {
-        wait.until((d) -> {
-            d.findElement(locator).sendKeys(value);
-            return true;
-        });
+        run(() -> getElement().sendKeys(value), "send keys " + value + " to element at: " + locator);
     }
 
     public void click() {
-        wait.until((d) -> {
-            d.findElement(locator).click();
-            return true;
-        });
+        run(() -> getElement().click(), "click element at: " + locator);
+    }
+
+    private WebElement getElement() {
+        if (cachedElement == null) {
+            cachedElement = driver.findElement(locator);
+        }
+        return cachedElement;
+    }
+
+    private void reset() {
+        cachedElement = null;
+    }
+
+    private void run(Runnable block, String message) {
+        long startTime = System.currentTimeMillis();
+        while (true) {
+            try {
+                block.run();
+                break;
+            } catch (StaleElementReferenceException e) {
+                reset();
+            } catch (NoSuchElementException | ElementNotInteractableException e) {
+                long currentTime = System.currentTimeMillis();
+                Duration duration = Duration.ofMillis(currentTime - startTime);
+
+                if (duration.compareTo(Duration.ofSeconds(20)) > 0) {
+                    String msg = "Unable to " + message + " after " + duration + " seconds";
+                    throw new ElementValidationException(msg, e);
+                }
+            }
+        }
     }
 }
