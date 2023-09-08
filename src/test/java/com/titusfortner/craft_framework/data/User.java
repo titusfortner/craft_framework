@@ -1,8 +1,11 @@
 package com.titusfortner.craft_framework.data;
 
+import net.datafaker.Faker;
+
 public class User {
-    private String username;
-    private String password;
+    private final Faker faker = new Faker();
+    private String username = faker.name().username();
+    private String password = faker.internet().password();
 
     public static User valid() {
         User user = new User();
