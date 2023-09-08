@@ -11,9 +11,7 @@ public class AuthenticationTest extends BaseTest {
     public void signInUnsuccessful() {
         HomePage homePage = HomePage.visit(driver);
 
-        User lockedOutUser = new User();
-        lockedOutUser.setUsername("locked_out_user");
-        lockedOutUser.setPassword("secret_sauce");
+        User lockedOutUser = User.lockedOut();
 
         Assertions.assertDoesNotThrow(() ->
                 homePage.loginUnsuccessfully(lockedOutUser.getUsername(), lockedOutUser.getPassword())
@@ -24,9 +22,7 @@ public class AuthenticationTest extends BaseTest {
     public void signInSuccessful() {
         HomePage homePage = HomePage.visit(driver);
 
-        User validUser = new User();
-        validUser.setUsername("standard_user");
-        validUser.setPassword("secret_sauce");
+        User validUser = User.valid();
 
         Assertions.assertDoesNotThrow(() ->
                 homePage.loginSuccessfully(validUser.getUsername(), validUser.getPassword())
@@ -36,9 +32,7 @@ public class AuthenticationTest extends BaseTest {
     @Test
     public void logout() {
         HomePage homePage = HomePage.visit(driver);
-        User validUser = new User();
-        validUser.setUsername("standard_user");
-        validUser.setPassword("secret_sauce");
+        User validUser = User.valid();
 
         homePage.loginSuccessfully(validUser.getUsername(), validUser.getPassword());
 
