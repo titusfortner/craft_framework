@@ -28,4 +28,8 @@ public class HeaderSection extends BasePage {
         driver.findElement(menuButton).click();
         driver.findElement(logoutLink).click();
     }
+
+    public boolean isLoggedIn() {
+        return InventoryPage.URL.equals(driver.getCurrentUrl());
+    }
 }

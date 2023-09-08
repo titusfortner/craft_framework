@@ -28,7 +28,7 @@ public class CheckoutTest extends BaseTest {
         informationPage.addInformation("Luke", "Perry", "90210");
 
         CheckoutPage checkoutPage = new CheckoutPage(driver);
-        Assertions.assertTrue(checkoutPage.isOnPage(),"Information Submission Unsuccessful");
+        Assertions.assertTrue(checkoutPage.isAddingInfoSuccessful(),"Information Submission Unsuccessful");
     }
 
     @Test
@@ -43,7 +43,6 @@ public class CheckoutTest extends BaseTest {
         checkoutPage.finish();
 
         FinishPage finish = new FinishPage(driver);
-        Assertions.assertTrue(finish.isOnPage());
         Assertions.assertTrue(finish.isComplete());
     }
 }

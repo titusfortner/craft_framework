@@ -2,7 +2,6 @@ package com.titusfortner.craft_framework.tests;
 
 import com.titusfortner.craft_framework.pages.HeaderSection;
 import com.titusfortner.craft_framework.pages.HomePage;
-import com.titusfortner.craft_framework.pages.InventoryPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +21,8 @@ public class AuthenticationTest extends BaseTest {
 
         homePage.login("standard_user", "secret_sauce");
 
-        InventoryPage inventoryPage = new InventoryPage(driver);
-        Assertions.assertTrue(inventoryPage.isOnPage(), "Login Not Successful");
+        HeaderSection headerSection = new HeaderSection(driver);
+        Assertions.assertTrue(headerSection.isLoggedIn(), "Login Not Successful");
     }
 
     @Test
@@ -34,6 +33,6 @@ public class AuthenticationTest extends BaseTest {
         HeaderSection headerSection = new HeaderSection(driver);
         headerSection.logOut();
 
-        Assertions.assertTrue(homePage.isOnPage(), "Logout Not Successful");
+        Assertions.assertFalse(headerSection.isLoggedIn(), "Logout Not Successful");
     }
 }

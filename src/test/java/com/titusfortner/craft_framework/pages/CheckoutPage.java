@@ -11,7 +11,7 @@ public class CheckoutPage extends BasePage {
         this.driver = driver;
     }
 
-    public boolean isOnPage() {
+    public boolean isAddingInfoSuccessful() {
         return URL.equals(driver.getCurrentUrl());
     }
 
