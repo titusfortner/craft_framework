@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class AuthenticationTest extends BaseTest {
     @Test
     public void signInUnsuccessful() {
-        HomePage homePage = HomePage.visit(driver);
+        HomePage homePage = HomePage.visit(browser);
 
         Assertions.assertDoesNotThrow(() ->
                 homePage.loginUnsuccessfully(User.lockedOut())
@@ -18,7 +18,7 @@ public class AuthenticationTest extends BaseTest {
 
     @Test
     public void signInSuccessful() {
-        HomePage homePage = HomePage.visit(driver);
+        HomePage homePage = HomePage.visit(browser);
 
         Assertions.assertDoesNotThrow(() ->
                 homePage.loginSuccessfully(User.valid())
@@ -27,11 +27,11 @@ public class AuthenticationTest extends BaseTest {
 
     @Test
     public void logout() {
-        HomePage homePage = HomePage.visit(driver);
+        HomePage homePage = HomePage.visit(browser);
 
         homePage.loginSuccessfully(User.valid());
 
-        HeaderSection headerSection = new HeaderSection(driver);
+        HeaderSection headerSection = new HeaderSection(browser);
         Assertions.assertDoesNotThrow(headerSection::logOutSuccessfully);
     }
 }

@@ -1,5 +1,6 @@
 package com.titusfortner.craft_framework.tests;
 
+import com.titusfortner.craft_framework.Browser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -7,11 +8,12 @@ import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.Optional;
 
 public class BaseTest {
-    ChromeDriver driver;
+    Browser browser;
 
     @RegisterExtension
     public MyTestWatcher myTestWatcher = new MyTestWatcher();
@@ -20,7 +22,9 @@ public class BaseTest {
     public void setup() {
         ChromeOptions options = new ChromeOptions();
         options.setPageLoadStrategy(PageLoadStrategy.NONE);
-        driver = new ChromeDriver(options);
+        RemoteWebDriver driver = new ChromeDriver(options);
+        browser = new Browser(driver);
+
     }
 
     public class MyTestWatcher implements TestWatcher {
@@ -28,7 +32,7 @@ public class BaseTest {
         public void testFailed(ExtensionContext context, Throwable cause) {
             try {
                 System.out.println("Test Failed!");
-                driver.quit();
+                browser.quit();
             } catch (Exception ignored) {
                 // No Driver
             }
@@ -38,7 +42,7 @@ public class BaseTest {
         public void testSuccessful(ExtensionContext context) {
             try {
                 System.out.println("Test Passed!");
-                driver.quit();
+                browser.quit();
             } catch (Exception ignored) {
                 // No Driver
             }

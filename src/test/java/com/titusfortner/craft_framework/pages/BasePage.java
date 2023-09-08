@@ -1,16 +1,11 @@
 package com.titusfortner.craft_framework.pages;
 
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
+import com.titusfortner.craft_framework.Browser;
 
 public abstract class BasePage {
-    protected RemoteWebDriver driver;
-    protected WebDriverWait wait;
+    protected Browser browser;
 
-    public BasePage(RemoteWebDriver driver) {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    public BasePage(Browser browser) {
+        this.browser = browser;
     }
 }
