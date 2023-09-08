@@ -1,7 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class HomePage {
@@ -17,18 +16,6 @@ public class HomePage {
         if (!isOnPage()) {
             driver.get(URL);
         }
-    }
-
-    public WebElement getUsernameElement() {
-        return driver.findElement(usernameTextfield);
-    }
-
-    public WebElement getPasswordElement() {
-        return driver.findElement(passwordTextfield);
-    }
-
-    public WebElement getSubmitElement() {
-        return driver.findElement(loginButton);
     }
 
     public InventoryPage login(String username, String password) {

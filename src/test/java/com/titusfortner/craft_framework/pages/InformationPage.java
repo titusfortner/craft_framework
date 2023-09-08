@@ -1,7 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class InformationPage {
@@ -13,22 +12,6 @@ public class InformationPage {
 
     public InformationPage(RemoteWebDriver driver) {
         this.driver = driver;
-    }
-
-    public WebElement getFirstNameElement() {
-        return driver.findElement(firstNameElement);
-    }
-
-    public WebElement getLastNameElement() {
-        return driver.findElement(lastNameElement);
-    }
-
-    public WebElement getPostalCodeElement() {
-        return driver.findElement(postalCodeElement);
-    }
-
-    public WebElement getContinueButton() {
-        return driver.findElement(continueButton);
     }
 
     public CheckoutPage addInformation(String firstName, String lastName, String postalCode) {

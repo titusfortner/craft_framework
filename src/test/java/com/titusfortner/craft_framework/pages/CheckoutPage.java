@@ -1,7 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class CheckoutPage {
@@ -11,10 +10,6 @@ public class CheckoutPage {
 
     public CheckoutPage(RemoteWebDriver driver) {
         this.driver = driver;
-    }
-
-    public WebElement getFinishButton() {
-        return driver.findElement(finishButton);
     }
 
     public boolean isOnPage() {

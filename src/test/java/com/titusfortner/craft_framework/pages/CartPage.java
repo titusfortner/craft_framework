@@ -15,14 +15,6 @@ public class CartPage {
         this.driver = driver;
     }
 
-    public WebElement getRemoveBackPackButton() {
-        return driver.findElement(By.cssSelector("button[data-test='remove-sauce-labs-backpack']"));
-    }
-
-    public WebElement getCheckoutButton() {
-        return driver.findElement(checkoutButton);
-    }
-
     public List<WebElement> getCartNumberElements() {
         return driver.findElements(shoppingCartBadge);
     }

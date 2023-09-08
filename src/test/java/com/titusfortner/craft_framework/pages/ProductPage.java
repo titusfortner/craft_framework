@@ -16,14 +16,6 @@ public class ProductPage {
         this.driver = driver;
     }
 
-    public WebElement getAddToCartButton() {
-        return driver.findElement(addToCartButton);
-    }
-
-    public WebElement getRemoveFromCartButton() {
-        return driver.findElement(removeFromCartButton);
-    }
-
     public List<WebElement> getCartNumberElements() {
         return driver.findElements(shoppingCartBadge);
     }

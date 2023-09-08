@@ -19,44 +19,8 @@ public class InventoryPage {
         this.driver = driver;
     }
 
-    public WebElement getMenuButton() {
-        return driver.findElement(menuButton);
-    }
-
-    public WebElement getLogoutLink() {
-        return driver.findElement(logoutLink);
-    }
-
-    public WebElement getBoltTShirtLink() {
-        return driver.findElement(item1Link);
-    }
-
-    public WebElement getAddOnesieButton() {
-        return driver.findElement(By.cssSelector("button[data-test='add-to-cart-sauce-labs-onesie']"));
-    }
-
-    public WebElement getCartNumberElement() {
-        return driver.findElement(By.className("shopping_cart_badge"));
-    }
-
-    public WebElement getAddBikeLightButton() {
-        return driver.findElement(By.cssSelector("button[data-test='add-to-cart-sauce-labs-bike-light']"));
-    }
-
-    public WebElement getRemoveBikeLightButton() {
-        return driver.findElement(By.cssSelector("button[data-test='remove-sauce-labs-bike-light']"));
-    }
-
     public List<WebElement> getCartNumberElements() {
         return driver.findElements(shoppingCartBadge);
-    }
-
-    public WebElement getAddBackpackButton() {
-        return driver.findElement(By.cssSelector("button[data-test='add-to-cart-sauce-labs-backpack']"));
-    }
-
-    public WebElement getCartImageLink() {
-        return driver.findElement(shoppingCartLink);
     }
 
     public boolean isOnPage() {

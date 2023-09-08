@@ -1,7 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class FinishPage {
@@ -11,10 +10,6 @@ public class FinishPage {
 
     public FinishPage(RemoteWebDriver driver) {
         this.driver = driver;
-    }
-
-    public WebElement getCompleteElement() {
-        return driver.findElement(completeText);
     }
 
     public boolean isOnPage() {

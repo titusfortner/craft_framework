@@ -6,55 +6,37 @@ import org.junit.jupiter.api.Test;
 
 public class CheckoutTest extends BaseTest {
 
-    public void login() {
+    public InventoryPage login() {
         HomePage homePage = new HomePage(driver);
-        driver.get(HomePage.URL);
-        homePage.getUsernameElement().sendKeys("standard_user");
-        homePage.getPasswordElement().sendKeys("secret_sauce");
-        homePage.getSubmitElement().click();
+        return homePage.login("standard_user", "secret_sauce");
     }
 
-    public void goToCheckoutWithItem() {
+    public InformationPage goToCheckoutWithItem() {
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.getAddOnesieButton().click();
-        inventoryPage.getCartImageLink().click();
-
-        CartPage cartPage = new CartPage(driver);
-        cartPage.getCheckoutButton().click();
+        inventoryPage.addItem("onesie");
+        CartPage cartPage = inventoryPage.goToCart();
+        return cartPage.checkout();
     }
 
     @Test
     public void goodInfo() {
         login();
-        goToCheckoutWithItem();
+        InformationPage informationPage = goToCheckoutWithItem();
 
-        InformationPage informationPage = new InformationPage(driver);
-        informationPage.getFirstNameElement().sendKeys("Luke");
-        informationPage.getLastNameElement().sendKeys("Perry");
-        informationPage.getPostalCodeElement().sendKeys("90210");
-        informationPage.getContinueButton().click();
+        CheckoutPage checkoutPage = informationPage.addInformation("Luke", "Perry", "90210");
 
-        Assertions.assertEquals(CheckoutPage.URL,
-                driver.getCurrentUrl(),
-                "Information Submission Unsuccessful");
+        Assertions.assertTrue(checkoutPage.isOnPage(),"Information Submission Unsuccessful");
     }
 
     @Test
     public void completeCheckout() {
         login();
-        goToCheckoutWithItem();
-        InformationPage informationPage = new InformationPage(driver);
-        informationPage.getFirstNameElement().sendKeys("Luke");
-        informationPage.getLastNameElement().sendKeys("Perry");
-        informationPage.getPostalCodeElement().sendKeys("90210");
-        informationPage.getContinueButton().click();
+        InformationPage informationPage = goToCheckoutWithItem();
+        CheckoutPage checkoutPage = informationPage.addInformation("Luke", "Perry", "90210");
 
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.getFinishButton().click();
+        FinishPage finish = checkoutPage.finish();
 
-        Assertions.assertEquals(FinishPage.URL, driver.getCurrentUrl());
-
-        FinishPage finishPage = new FinishPage(driver);
-        Assertions.assertTrue(finishPage.getCompleteElement().isDisplayed());
+        Assertions.assertTrue(finish.isOnPage());
+        Assertions.assertTrue(finish.isComplete());
     }
 }
