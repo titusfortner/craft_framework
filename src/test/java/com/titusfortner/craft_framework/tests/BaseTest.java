@@ -20,7 +20,7 @@ public class BaseTest {
     public void setup() {
         ChromeOptions options = new ChromeOptions();
         options.setImplicitWaitTimeout(Duration.ofSeconds(1));
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
     }
 
     public class MyTestWatcher implements TestWatcher {

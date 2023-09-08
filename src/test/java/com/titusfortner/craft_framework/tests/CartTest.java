@@ -25,8 +25,8 @@ public class CartTest extends BaseTest {
         ProductPage productPage = new ProductPage(driver);
         productPage.getAddToCartButton().click();
 
-        Assertions.assertEquals("1",
-                productPage.getCartNumberElement().getText(),
+        Assertions.assertEquals(1,
+                productPage.getCartNumberElements().size(),
                 "Item not correctly added to cart");
     }
 

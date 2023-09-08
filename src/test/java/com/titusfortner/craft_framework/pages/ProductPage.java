@@ -8,24 +8,40 @@ import java.util.List;
 
 public class ProductPage {
     private final RemoteWebDriver driver;
+    private final By addToCartButton = By.cssSelector("button[data-test^='add-to-cart-']");
+    private final By removeFromCartButton = By.cssSelector("button[data-test^='remove']");
+    private final By shoppingCartBadge = By.className("shopping_cart_badge");
 
     public ProductPage(RemoteWebDriver driver) {
         this.driver = driver;
     }
 
     public WebElement getAddToCartButton() {
-        return driver.findElement(By.cssSelector("button[data-test='add-to-cart-sauce-labs-bolt-t-shirt']"));
-    }
-
-    public WebElement getCartNumberElement() {
-        return driver.findElement(By.className("shopping_cart_badge"));
+        return driver.findElement(addToCartButton);
     }
 
     public WebElement getRemoveFromCartButton() {
-        return driver.findElement(By.cssSelector("button[data-test='remove-sauce-labs-bolt-t-shirt']"));
+        return driver.findElement(removeFromCartButton);
     }
 
     public List<WebElement> getCartNumberElements() {
-        return driver.findElements(By.className("shopping_cart_badge"));
+        return driver.findElements(shoppingCartBadge);
+    }
+
+    public void addItemToCart() {
+        driver.findElement(addToCartButton).click();
+    }
+
+    public Integer getNumberItemsInCart() {
+        List<WebElement> cartNumberElements = getCartNumberElements();
+        if (cartNumberElements.isEmpty()) {
+            return 0;
+        } else {
+            return Integer.valueOf(cartNumberElements.get(0).getText());
+        }
+    }
+
+    public void removeItemFromCart() {
+        driver.findElement(removeFromCartButton).click();
     }
 }
