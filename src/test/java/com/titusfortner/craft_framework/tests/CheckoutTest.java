@@ -9,9 +9,8 @@ public class CheckoutTest extends BaseTest {
 
     public void login() {
         HomePage homePage = HomePage.visit(driver);
-        User validUser = User.valid();
 
-        homePage.loginSuccessfully(validUser.getUsername(), validUser.getPassword());
+        homePage.loginSuccessfully(User.valid());
     }
 
     public void goToCheckoutWithItem() {

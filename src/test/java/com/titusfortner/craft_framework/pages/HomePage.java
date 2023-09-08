@@ -1,5 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
+import com.titusfortner.craft_framework.data.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -24,8 +25,8 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public void loginUnsuccessfully(String username, String password) {
-        login(username, password);
+    public void loginUnsuccessfully(User user) {
+        login(user);
 
         try {
             wait.until((d) -> !d.findElements(errorElement).isEmpty());
@@ -35,8 +36,8 @@ public class HomePage extends BasePage {
         }
     }
 
-    public void loginSuccessfully(String username, String password) {
-        login(username, password);
+    public void loginSuccessfully(User user) {
+        login(user);
 
         try {
             wait.until((d) -> !URL.equals(d.getCurrentUrl()));
@@ -47,9 +48,9 @@ public class HomePage extends BasePage {
         }
     }
 
-    private void login(String username, String password) {
-        driver.findElement(usernameTextfield).sendKeys(username);
-        driver.findElement(passwordTextfield).sendKeys(password);
+    private void login(User user) {
+        driver.findElement(usernameTextfield).sendKeys(user.getUsername());
+        driver.findElement(passwordTextfield).sendKeys(user.getPassword());
         driver.findElement(loginButton).click();
     }
 }

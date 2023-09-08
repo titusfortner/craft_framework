@@ -8,9 +8,8 @@ import org.junit.jupiter.api.Test;
 public class CartTest extends BaseTest {
     public void login() {
         HomePage homePage = HomePage.visit(driver);
-        User validUser = User.valid();
 
-        homePage.loginSuccessfully(validUser.getUsername(), validUser.getPassword());
+        homePage.loginSuccessfully(User.valid());
     }
 
     @Test
