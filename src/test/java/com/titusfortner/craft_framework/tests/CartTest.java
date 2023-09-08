@@ -1,5 +1,6 @@
 package com.titusfortner.craft_framework.tests;
 
+import com.titusfortner.craft_framework.data.User;
 import com.titusfortner.craft_framework.pages.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,11 @@ import org.junit.jupiter.api.Test;
 public class CartTest extends BaseTest {
     public void login() {
         HomePage homePage = HomePage.visit(driver);
-        homePage.loginSuccessfully("standard_user", "secret_sauce");
+        User validUser = new User();
+        validUser.setUsername("standard_user");
+        validUser.setPassword("secret_sauce");
+
+        homePage.loginSuccessfully(validUser.getUsername(), validUser.getPassword());
     }
 
     @Test
@@ -17,6 +22,7 @@ public class CartTest extends BaseTest {
         inventoryPage.viewBoltTShirtProduct();
 
         ProductPage productPage = new ProductPage(driver);
+
         Assertions.assertDoesNotThrow(productPage::addItemToCartSuccessfully);
     }
 
@@ -25,6 +31,7 @@ public class CartTest extends BaseTest {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.viewBoltTShirtProduct();
+
         ProductPage productPage = new ProductPage(driver);
         productPage.addItemToCartSuccessfully();
 
@@ -35,7 +42,8 @@ public class CartTest extends BaseTest {
     public void addFromInventoryPage() {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
-        Assertions.assertDoesNotThrow(() -> inventoryPage.addItemSuccessfully("onesie"));
+
+        Assertions.assertDoesNotThrow(() -> inventoryPage.addItemSuccessfully("bike-light"));
     }
 
     @Test
