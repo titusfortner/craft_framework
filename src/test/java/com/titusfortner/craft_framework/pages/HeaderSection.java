@@ -1,6 +1,7 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -12,7 +13,7 @@ public class HeaderSection extends BasePage {
     private final By shoppingCartBadge = By.className("shopping_cart_badge");
 
     public HeaderSection(RemoteWebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public Integer getNumberItemsInCart() {
@@ -24,18 +25,28 @@ public class HeaderSection extends BasePage {
         }
     }
 
-    public void logOut() {
-        driver.findElement(menuButton).click();
-        driver.findElement(logoutLink).click();
-    }
-
     public boolean isLoggedIn() {
         return InventoryPage.URL.equals(driver.getCurrentUrl());
     }
 
-    public void validateLoggedOut() {
-        if (isLoggedIn()) {
+    public void logOutSuccessfully() {
+        logOut();
+
+        try {
+            wait.until((d) -> !isLoggedIn());
+        } catch (TimeoutException ex) {
             throw new PageValidationException("User is still logged in;");
         }
+    }
+
+    private void logOut() {
+        driver.findElement(menuButton).click();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        driver.findElement(logoutLink).click();
     }
 }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class CartTest extends BaseTest {
     public void login() {
         HomePage homePage = HomePage.visit(driver);
-        homePage.login("standard_user", "secret_sauce");
+        homePage.loginSuccessfully("standard_user", "secret_sauce");
     }
 
     @Test
@@ -17,12 +17,7 @@ public class CartTest extends BaseTest {
         inventoryPage.viewBoltTShirtProduct();
 
         ProductPage productPage = new ProductPage(driver);
-        productPage.addItemToCart();
-
-        HeaderSection headerSection = new HeaderSection(driver);
-        Assertions.assertEquals(1,
-                headerSection.getNumberItemsInCart(),
-                "Item not correctly added to cart");
+        Assertions.assertDoesNotThrow(productPage::addItemToCartSuccessfully);
     }
 
     @Test
@@ -31,55 +26,35 @@ public class CartTest extends BaseTest {
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.viewBoltTShirtProduct();
         ProductPage productPage = new ProductPage(driver);
-        productPage.addItemToCart();
+        productPage.addItemToCartSuccessfully();
 
-        productPage.removeItemFromCart();
-
-        HeaderSection headerSection = new HeaderSection(driver);
-        Assertions.assertEquals(0,
-                headerSection.getNumberItemsInCart(),
-                "Item not correctly removed from cart");
+        Assertions.assertDoesNotThrow(productPage::removeItemFromCartSuccessfully);
     }
 
     @Test
     public void addFromInventoryPage() {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.addItem("onesie");
-
-        HeaderSection headerSection = new HeaderSection(driver);
-        Assertions.assertEquals(1,
-                headerSection.getNumberItemsInCart(),
-                "Item not correctly added to cart");
+        Assertions.assertDoesNotThrow(() -> inventoryPage.addItemSuccessfully("onesie"));
     }
 
     @Test
     public void removeFromInventoryPage() {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.addItem("bike-light");
+        inventoryPage.addItemSuccessfully("bike-light");
 
-        inventoryPage.removeItem("bike-light");
-
-        HeaderSection headerSection = new HeaderSection(driver);
-        Assertions.assertEquals(0,
-                headerSection.getNumberItemsInCart(),
-                "Item not correctly removed from cart");
+        Assertions.assertDoesNotThrow(() -> inventoryPage.removeItemSuccessfully("bike-light"));
     }
 
     @Test
     public void removeFromCartPage() {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.addItem("backpack");
+        inventoryPage.addItemSuccessfully("backpack");
         inventoryPage.goToCart();
 
         CartPage cartPage = new CartPage(driver);
-        cartPage.removeItem("backpack");
-
-        HeaderSection headerSection = new HeaderSection(driver);
-        Assertions.assertEquals(0,
-                headerSection.getNumberItemsInCart(),
-                "Item not correctly removed from cart");
+        Assertions.assertDoesNotThrow(() -> cartPage.removeItemSuccessfully("backpack"));
     }
 }

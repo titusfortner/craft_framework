@@ -1,6 +1,7 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class CheckoutPage extends BasePage {
@@ -8,17 +9,18 @@ public class CheckoutPage extends BasePage {
     private final By finishButton = By.cssSelector("button[data-test='finish']");
 
     public CheckoutPage(RemoteWebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    public void validateFinished() {
-        FinishPage finishPage = new FinishPage(driver);
-        if (!finishPage.isComplete()) {
-            throw new PageValidationException("Checkout unsuccessful;");
-        }
-    }
-
-    public void finish() {
+    public void finishSuccessfully() {
         driver.findElement(finishButton).click();
+        try {
+            wait.until((d) -> !URL.equals(d.getCurrentUrl()));
+        } catch (TimeoutException ex) {
+            FinishPage finishPage = new FinishPage(driver);
+            if (!finishPage.isComplete()) {
+                throw new PageValidationException("Checkout unsuccessful;");
+            }
+        }
     }
 }

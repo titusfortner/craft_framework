@@ -1,6 +1,7 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -20,25 +21,35 @@ public class HomePage extends BasePage {
     }
 
     public HomePage(RemoteWebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    public void login(String username, String password) {
-        driver.findElement(usernameTextfield).sendKeys(username);
-        driver.findElement(passwordTextfield).sendKeys(password);
-        driver.findElement(loginButton).click();
+    public void loginUnsuccessfully(String username, String password) {
+        login(username, password);
+
+        try {
+            wait.until((d) -> !d.findElements(errorElement).isEmpty());
+        } catch (TimeoutException ex) {
+            String url = driver.getCurrentUrl();
+            throw new PageValidationException("Expected login errors, but none were found; current URL: " + url);
+        }
     }
 
-    public boolean isLockedOut() {
-        return driver.findElement(errorElement).getText().contains("Sorry, this user has been locked out");
-    }
+    public void loginSuccessfully(String username, String password) {
+        login(username, password);
 
-    public void validateLoggedIn() {
-        HeaderSection headerSection = new HeaderSection(driver);
-        if (!headerSection.isLoggedIn()) {
+        try {
+            wait.until((d) -> !URL.equals(d.getCurrentUrl()));
+        } catch (TimeoutException ex) {
             List<WebElement> errors = driver.findElements(errorElement);
             String additional = errors.isEmpty() ? "" : " found error: " + errors.get(0).getText();
             throw new PageValidationException("User is not logged in;" + additional);
         }
+    }
+
+    private void login(String username, String password) {
+        driver.findElement(usernameTextfield).sendKeys(username);
+        driver.findElement(passwordTextfield).sendKeys(password);
+        driver.findElement(loginButton).click();
     }
 }

@@ -8,12 +8,12 @@ public class CheckoutTest extends BaseTest {
 
     public void login() {
         HomePage homePage = HomePage.visit(driver);
-        homePage.login("standard_user", "secret_sauce");
+        homePage.loginSuccessfully("standard_user", "secret_sauce");
     }
 
     public void goToCheckoutWithItem() {
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.addItem("onesie");
+        inventoryPage.addItemSuccessfully("onesie");
         inventoryPage.goToCart();
         CartPage cartPage = new CartPage(driver);
         cartPage.checkout();
@@ -25,9 +25,9 @@ public class CheckoutTest extends BaseTest {
         goToCheckoutWithItem();
 
         InformationPage informationPage = new InformationPage(driver);
-        informationPage.addInformation("Luke", "Perry", "90210");
-
-        Assertions.assertDoesNotThrow(informationPage::validateInformationAdded);
+        Assertions.assertDoesNotThrow(() -> {
+            informationPage.addInformationSuccessfully("Luke", "Perry", "90210");
+        });
     }
 
     @Test
@@ -36,11 +36,9 @@ public class CheckoutTest extends BaseTest {
         goToCheckoutWithItem();
 
         InformationPage informationPage = new InformationPage(driver);
-        informationPage.addInformation("Luke", "Perry", "90210");
+        informationPage.addInformationSuccessfully("Luke", "Perry", "90210");
 
         CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.finish();
-
-        Assertions.assertDoesNotThrow(checkoutPage::validateFinished);
+        Assertions.assertDoesNotThrow(checkoutPage::finishSuccessfully);
     }
 }

@@ -1,6 +1,7 @@
 package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class InventoryPage extends BasePage{
@@ -9,24 +10,56 @@ public class InventoryPage extends BasePage{
     private final By shoppingCartLink = By.className("shopping_cart_link");
 
     public InventoryPage(RemoteWebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void viewBoltTShirtProduct() {
         driver.findElement(item1Link).click();
     }
 
-    public void addItem(String product) {
+    public void goToCart() {
+        driver.findElement(shoppingCartLink).click();
+    }
+
+    public void addItemSuccessfully(String product) {
+        HeaderSection headerSection = new HeaderSection(driver);
+        Integer before = headerSection.getNumberItemsInCart();
+        Integer expected = before + 1;
+
+        addItem(product);
+
+        try {
+            wait.until((d) -> expected.equals(headerSection.getNumberItemsInCart()));
+        } catch (TimeoutException ex) {
+            String what = "Adding item unsuccessful; ";
+            String after = headerSection.getNumberItemsInCart().toString();
+            throw new PageValidationException(what + "Expected: " + expected + ", but found: " + after);
+        }
+    }
+
+    public void removeItemSuccessfully(String product) {
+        HeaderSection headerSection = new HeaderSection(driver);
+        Integer before = headerSection.getNumberItemsInCart();
+        Integer expected = before - 1;
+
+        removeItem(product);
+
+        try {
+            wait.until((d) -> expected.equals(headerSection.getNumberItemsInCart()));
+        } catch (TimeoutException ex) {
+            String what = "Removing item unsuccessful; ";
+            String after = headerSection.getNumberItemsInCart().toString();
+            throw new PageValidationException(what + "Expected: " + expected + ", but found: " + after);
+        }
+    }
+
+    private void addItem(String product) {
         String cssSelector = "button[data-test='add-to-cart-sauce-labs-" + product + "']";
         driver.findElement(By.cssSelector(cssSelector)).click();
     }
 
-    public void removeItem(String product) {
+    private void removeItem(String product) {
         String cssSelector = "button[data-test='remove-sauce-labs-" + product + "']";
         driver.findElement(By.cssSelector(cssSelector)).click();
-    }
-
-    public void goToCart() {
-        driver.findElement(shoppingCartLink).click();
     }
 }
