@@ -32,9 +32,8 @@ public class InventoryPage {
         driver.findElement(logoutLink).click();
     }
 
-    public ProductPage viewBoltTShirtProduct() {
+    public void viewBoltTShirtProduct() {
         driver.findElement(item1Link).click();
-        return new ProductPage(driver);
     }
 
     public void addItem(String product) {
@@ -56,8 +55,7 @@ public class InventoryPage {
         }
     }
 
-    public CartPage goToCart() {
+    public void goToCart() {
         driver.findElement(shoppingCartLink).click();
-        return new CartPage(driver);
     }
 }

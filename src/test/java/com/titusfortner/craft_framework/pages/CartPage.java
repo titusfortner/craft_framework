@@ -24,9 +24,8 @@ public class CartPage {
         driver.findElement(By.cssSelector(cssSelector)).click();
     }
 
-    public InformationPage checkout() {
+    public void checkout() {
         driver.findElement(checkoutButton).click();
-        return new InformationPage(driver);
     }
 
     public Integer getNumberItemsInCart() {

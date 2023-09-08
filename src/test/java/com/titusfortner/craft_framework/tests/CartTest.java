@@ -8,16 +8,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CartTest extends BaseTest {
-    public InventoryPage login() {
+    public void login() {
         HomePage homePage = HomePage.visit(driver);
-        return homePage.login("standard_user", "secret_sauce");
+        homePage.login("standard_user", "secret_sauce");
     }
 
     @Test
     public void addFromProductPage() {
-        InventoryPage inventoryPage = login();
-        ProductPage productPage = inventoryPage.viewBoltTShirtProduct();
+        login();
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.viewBoltTShirtProduct();
 
+        ProductPage productPage = new ProductPage(driver);
         productPage.addItemToCart();
 
         Assertions.assertEquals(1,
@@ -27,10 +29,12 @@ public class CartTest extends BaseTest {
 
     @Test
     public void removeFromProductPage() {
-        InventoryPage inventoryPage = login();
-        ProductPage productPage = inventoryPage.viewBoltTShirtProduct();
-
+        login();
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.viewBoltTShirtProduct();
+        ProductPage productPage = new ProductPage(driver);
         productPage.addItemToCart();
+
         productPage.removeItemFromCart();
 
         Assertions.assertEquals(0,
@@ -40,7 +44,8 @@ public class CartTest extends BaseTest {
 
     @Test
     public void addFromInventoryPage() {
-        InventoryPage inventoryPage = login();
+        login();
+        InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addItem("onesie");
 
         Assertions.assertEquals(1,
@@ -50,7 +55,8 @@ public class CartTest extends BaseTest {
 
     @Test
     public void removeFromInventoryPage() {
-        InventoryPage inventoryPage = login();
+        login();
+        InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addItem("bike-light");
 
         inventoryPage.removeItem("bike-light");
@@ -62,10 +68,12 @@ public class CartTest extends BaseTest {
 
     @Test
     public void removeFromCartPage() {
-        InventoryPage inventoryPage = login();
+        login();
+        InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addItem("backpack");
-        CartPage cartPage = inventoryPage.goToCart();
+        inventoryPage.goToCart();
 
+        CartPage cartPage = new CartPage(driver);
         cartPage.removeItem("backpack");
 
         Assertions.assertEquals(0,
