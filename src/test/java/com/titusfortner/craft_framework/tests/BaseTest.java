@@ -18,7 +18,9 @@ public class BaseTest {
 
     @BeforeEach
     public void setup() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.setImplicitWaitTimeout(Duration.ofSeconds(1));
+        driver = new ChromeDriver(options);
     }
 
     public class MyTestWatcher implements TestWatcher {
