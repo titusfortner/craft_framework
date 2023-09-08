@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class CartTest extends BaseTest {
     public InventoryPage login() {
-        HomePage homePage = new HomePage(driver);
-        return homePage.login("standard_user", "secret_sauce");
+        return new InventoryPage(driver);
     }
 
     @Test
