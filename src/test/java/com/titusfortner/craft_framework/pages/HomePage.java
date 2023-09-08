@@ -2,19 +2,17 @@ package com.titusfortner.craft_framework.pages;
 
 import com.titusfortner.craft_framework.data.User;
 import com.titusfortner.craft_framework.elements.Element;
+import com.titusfortner.craft_framework.elements.ElementList;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.util.List;
 
 public class HomePage extends BasePage {
     public static final String URL = "https://www.saucedemo.com/";
     private final Element usernameTextfield = new Element(driver, By.cssSelector("input[data-test='username']"));
     private final Element passwordTextfield = new Element(driver, By.cssSelector("input[data-test='password']"));
     private final Element loginButton = new Element(driver, By.cssSelector("input[data-test='login-button']"));
-    private final By errorElement = By.cssSelector("[data-test=error]");
+    private final ElementList errorElements = new ElementList(driver, By.cssSelector("[data-test=error]"));
 
     public static HomePage visit(RemoteWebDriver driver) {
         HomePage homePage = new HomePage(driver);
@@ -30,7 +28,7 @@ public class HomePage extends BasePage {
         login(user);
 
         try {
-            wait.until((d) -> !d.findElements(errorElement).isEmpty());
+            errorElements.waitUntilPresent();
         } catch (TimeoutException ex) {
             String url = driver.getCurrentUrl();
             throw new PageValidationException("Expected login errors, but none were found; current URL: " + url);
@@ -43,8 +41,7 @@ public class HomePage extends BasePage {
         try {
             wait.until((d) -> !URL.equals(d.getCurrentUrl()));
         } catch (TimeoutException ex) {
-            List<WebElement> errors = driver.findElements(errorElement);
-            String additional = errors.isEmpty() ? "" : " found error: " + errors.get(0).getText();
+            String additional = errorElements.isEmpty() ? "" : " found error: " + errorElements.getFirst().getText();
             throw new PageValidationException("User is not logged in;" + additional);
         }
     }
