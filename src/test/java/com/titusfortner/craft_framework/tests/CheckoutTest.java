@@ -27,8 +27,7 @@ public class CheckoutTest extends BaseTest {
         InformationPage informationPage = new InformationPage(driver);
         informationPage.addInformation("Luke", "Perry", "90210");
 
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        Assertions.assertTrue(checkoutPage.isAddingInfoSuccessful(),"Information Submission Unsuccessful");
+        Assertions.assertDoesNotThrow(informationPage::validateInformationAdded);
     }
 
     @Test
@@ -42,7 +41,6 @@ public class CheckoutTest extends BaseTest {
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.finish();
 
-        FinishPage finish = new FinishPage(driver);
-        Assertions.assertTrue(finish.isComplete());
+        Assertions.assertDoesNotThrow(checkoutPage::validateFinished);
     }
 }
