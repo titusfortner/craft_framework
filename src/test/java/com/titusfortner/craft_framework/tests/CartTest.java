@@ -1,9 +1,6 @@
 package com.titusfortner.craft_framework.tests;
 
-import com.titusfortner.craft_framework.pages.CartPage;
-import com.titusfortner.craft_framework.pages.HomePage;
-import com.titusfortner.craft_framework.pages.InventoryPage;
-import com.titusfortner.craft_framework.pages.ProductPage;
+import com.titusfortner.craft_framework.pages.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +19,9 @@ public class CartTest extends BaseTest {
         ProductPage productPage = new ProductPage(driver);
         productPage.addItemToCart();
 
+        HeaderSection headerSection = new HeaderSection(driver);
         Assertions.assertEquals(1,
-                productPage.getNumberItemsInCart(),
+                headerSection.getNumberItemsInCart(),
                 "Item not correctly added to cart");
     }
 
@@ -37,8 +35,9 @@ public class CartTest extends BaseTest {
 
         productPage.removeItemFromCart();
 
+        HeaderSection headerSection = new HeaderSection(driver);
         Assertions.assertEquals(0,
-                productPage.getNumberItemsInCart(),
+                headerSection.getNumberItemsInCart(),
                 "Item not correctly removed from cart");
     }
 
@@ -48,8 +47,9 @@ public class CartTest extends BaseTest {
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.addItem("onesie");
 
+        HeaderSection headerSection = new HeaderSection(driver);
         Assertions.assertEquals(1,
-                inventoryPage.getNumberItemsInCart(),
+                headerSection.getNumberItemsInCart(),
                 "Item not correctly added to cart");
     }
 
@@ -61,8 +61,9 @@ public class CartTest extends BaseTest {
 
         inventoryPage.removeItem("bike-light");
 
+        HeaderSection headerSection = new HeaderSection(driver);
         Assertions.assertEquals(0,
-                inventoryPage.getNumberItemsInCart(),
+                headerSection.getNumberItemsInCart(),
                 "Item not correctly removed from cart");
     }
 
@@ -76,8 +77,9 @@ public class CartTest extends BaseTest {
         CartPage cartPage = new CartPage(driver);
         cartPage.removeItem("backpack");
 
+        HeaderSection headerSection = new HeaderSection(driver);
         Assertions.assertEquals(0,
-                cartPage.getNumberItemsInCart(),
+                headerSection.getNumberItemsInCart(),
                 "Item not correctly removed from cart");
     }
 }

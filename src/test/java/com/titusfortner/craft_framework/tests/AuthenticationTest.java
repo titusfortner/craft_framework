@@ -1,5 +1,6 @@
 package com.titusfortner.craft_framework.tests;
 
+import com.titusfortner.craft_framework.pages.HeaderSection;
 import com.titusfortner.craft_framework.pages.HomePage;
 import com.titusfortner.craft_framework.pages.InventoryPage;
 import org.junit.jupiter.api.Assertions;
@@ -30,8 +31,8 @@ public class AuthenticationTest extends BaseTest {
         HomePage homePage = HomePage.visit(driver);
         homePage.login("standard_user", "secret_sauce");
 
-        InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.logOut();
+        HeaderSection headerSection = new HeaderSection(driver);
+        headerSection.logOut();
 
         Assertions.assertTrue(homePage.isOnPage(), "Logout Not Successful");
     }
