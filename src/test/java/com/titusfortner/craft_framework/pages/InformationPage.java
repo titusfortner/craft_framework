@@ -1,5 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
+import com.titusfortner.craft_framework.data.Person;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -19,10 +20,14 @@ public class InformationPage extends BasePage {
         super(driver);
     }
 
-    public void addInformationSuccessfully(String firstName, String lastName, String postalCode) {
-        driver.findElement(firstNameElement).sendKeys(firstName);
-        driver.findElement(lastNameElement).sendKeys(lastName);
-        driver.findElement(postalCodeElement).sendKeys(postalCode);
+    public void addInformationSuccessfully() {
+        addInformationSuccessfully(new Person());
+    }
+
+    public void addInformationSuccessfully(Person person) {
+        driver.findElement(firstNameElement).sendKeys(person.getFirstName());
+        driver.findElement(lastNameElement).sendKeys(person.getLastName());
+        driver.findElement(postalCodeElement).sendKeys(person.getPostalCode());
         driver.findElement(continueButton).click();
 
         try {

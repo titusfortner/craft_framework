@@ -15,7 +15,7 @@ public class CheckoutTest extends BaseTest {
 
     public void goToCheckoutWithItem() {
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.addItemSuccessfully("onesie");
+        inventoryPage.addItemSuccessfully();
         inventoryPage.goToCart();
         CartPage cartPage = new CartPage(driver);
         cartPage.checkout();
@@ -27,7 +27,7 @@ public class CheckoutTest extends BaseTest {
         goToCheckoutWithItem();
         InformationPage informationPage = new InformationPage(driver);
 
-        Assertions.assertDoesNotThrow(() -> informationPage.addInformationSuccessfully("Luke", "Perry", "90210"));
+        Assertions.assertDoesNotThrow(() -> informationPage.addInformationSuccessfully());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class CheckoutTest extends BaseTest {
         login();
         goToCheckoutWithItem();
         InformationPage informationPage = new InformationPage(driver);
-        informationPage.addInformationSuccessfully("Luke", "Perry", "90210");
+        informationPage.addInformationSuccessfully();
 
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         Assertions.assertDoesNotThrow(checkoutPage::finishSuccessfully);

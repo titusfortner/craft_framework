@@ -40,26 +40,26 @@ public class CartTest extends BaseTest {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
 
-        Assertions.assertDoesNotThrow(() -> inventoryPage.addItemSuccessfully("bike-light"));
+        Assertions.assertDoesNotThrow(inventoryPage::addItemSuccessfully);
     }
 
     @Test
     public void removeFromInventoryPage() {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.addItemSuccessfully("bike-light");
+        inventoryPage.addItemSuccessfully();
 
-        Assertions.assertDoesNotThrow(() -> inventoryPage.removeItemSuccessfully("bike-light"));
+        Assertions.assertDoesNotThrow(inventoryPage::removeItemSuccessfully);
     }
 
     @Test
     public void removeFromCartPage() {
         login();
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.addItemSuccessfully("backpack");
+        inventoryPage.addItemSuccessfully();
         inventoryPage.goToCart();
 
         CartPage cartPage = new CartPage(driver);
-        Assertions.assertDoesNotThrow(() -> cartPage.removeItemSuccessfully("backpack"));
+        Assertions.assertDoesNotThrow(cartPage::removeItemSuccessfully);
     }
 }

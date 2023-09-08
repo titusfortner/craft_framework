@@ -2,10 +2,14 @@ package com.titusfortner.craft_framework.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import java.util.List;
+import java.util.Random;
 
 public class CartPage extends BasePage {
     private final By checkoutButton = By.cssSelector("button[data-test='checkout']");
+    private final By removeItemButton = By.cssSelector("button[data-test^='remove-']");
 
     public CartPage(RemoteWebDriver driver) {
         super(driver);
@@ -15,12 +19,12 @@ public class CartPage extends BasePage {
         driver.findElement(checkoutButton).click();
     }
 
-    public void removeItemSuccessfully(String product) {
+    public void removeItemSuccessfully() {
         HeaderSection headerSection = new HeaderSection(driver);
         Integer before = headerSection.getNumberItemsInCart();
         Integer expected = before - 1;
 
-        removeItem(product);
+        removeItem();
 
         try {
             wait.until((d) -> expected.equals(headerSection.getNumberItemsInCart()));
@@ -31,8 +35,8 @@ public class CartPage extends BasePage {
         }
     }
 
-    private void removeItem(String product) {
-        String cssSelector = "button[data-test='remove-sauce-labs-" + product + "']";
-        driver.findElement(By.cssSelector(cssSelector)).click();
+    private void removeItem() {
+        List<WebElement> items = driver.findElements(removeItemButton);
+        items.get(new Random().nextInt(items.size())).click();
     }
 }
