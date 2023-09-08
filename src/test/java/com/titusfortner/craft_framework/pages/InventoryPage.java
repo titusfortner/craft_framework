@@ -17,10 +17,6 @@ public class InventoryPage {
 
     public InventoryPage(RemoteWebDriver driver) {
         this.driver = driver;
-        if (!isOnPage()) {
-            HomePage homePage = new HomePage(driver);
-            homePage.login("standard_user", "secret_sauce");
-        }
     }
 
     public List<WebElement> getCartNumberElements() {
