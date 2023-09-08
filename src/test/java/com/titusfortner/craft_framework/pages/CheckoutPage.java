@@ -13,7 +13,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public void finishSuccessfully() {
-        driver.findElement(finishButton).click();
+        click(finishButton);
         try {
             wait.until((d) -> !URL.equals(d.getCurrentUrl()));
         } catch (TimeoutException ex) {

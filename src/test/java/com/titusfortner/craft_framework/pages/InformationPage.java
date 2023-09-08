@@ -25,10 +25,10 @@ public class InformationPage extends BasePage {
     }
 
     public void addInformationSuccessfully(Person person) {
-        driver.findElement(firstNameElement).sendKeys(person.getFirstName());
-        driver.findElement(lastNameElement).sendKeys(person.getLastName());
-        driver.findElement(postalCodeElement).sendKeys(person.getPostalCode());
-        driver.findElement(continueButton).click();
+        sendKeys(firstNameElement, person.getFirstName());
+        sendKeys(lastNameElement, person.getLastName());
+        sendKeys(postalCodeElement, person.getPostalCode());
+        click(continueButton);
 
         try {
             wait.until((d) -> !URL.equals(d.getCurrentUrl()));
