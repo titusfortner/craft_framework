@@ -1,6 +1,7 @@
 package com.titusfortner.craft_framework.pages;
 
 import com.titusfortner.craft_framework.data.User;
+import com.titusfortner.craft_framework.elements.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public class HomePage extends BasePage {
     public static final String URL = "https://www.saucedemo.com/";
-    private final By usernameTextfield = By.cssSelector("input[data-test='username']");
-    private final By passwordTextfield = By.cssSelector("input[data-test='password']");
-    private final By loginButton = By.cssSelector("input[data-test='login-button']");
+    private final Element usernameTextfield = new Element(driver, By.cssSelector("input[data-test='username']"));
+    private final Element passwordTextfield = new Element(driver, By.cssSelector("input[data-test='password']"));
+    private final Element loginButton = new Element(driver, By.cssSelector("input[data-test='login-button']"));
     private final By errorElement = By.cssSelector("[data-test=error]");
 
     public static HomePage visit(RemoteWebDriver driver) {
@@ -49,8 +50,8 @@ public class HomePage extends BasePage {
     }
 
     private void login(User user) {
-        sendKeys(usernameTextfield, user.getUsername());
-        sendKeys(passwordTextfield, user.getPassword());
-        click(loginButton);
+        usernameTextfield.sendKeys(user.getUsername());
+        passwordTextfield.sendKeys(user.getPassword());
+        loginButton.click();
     }
 }

@@ -1,5 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
+import com.titusfortner.craft_framework.elements.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -8,8 +9,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.util.List;
 
 public class HeaderSection extends BasePage {
-    private final By menuButton = By.id("react-burger-menu-btn");
-    private final By logoutLink = By.id("logout_sidebar_link");
+    private final Element menuButton = new Element(driver, By.id("react-burger-menu-btn"));
+    private final Element logoutLink = new Element(driver, By.id("logout_sidebar_link"));
     private final By shoppingCartBadge = By.className("shopping_cart_badge");
 
     public HeaderSection(RemoteWebDriver driver) {
@@ -40,7 +41,7 @@ public class HeaderSection extends BasePage {
     }
 
     private void logOut() {
-        click(menuButton);
-        click(logoutLink);
+        menuButton.click();
+        logoutLink.click();
     }
 }

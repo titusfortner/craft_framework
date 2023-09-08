@@ -1,5 +1,6 @@
 package com.titusfortner.craft_framework.pages;
 
+import com.titusfortner.craft_framework.elements.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class CartPage extends BasePage {
-    private final By checkoutButton = By.cssSelector("button[data-test='checkout']");
+    private final Element checkoutButton = new Element(driver, By.cssSelector("button[data-test='checkout']"));
     private final By removeItemButton = By.cssSelector("button[data-test^='remove-']");
 
     public CartPage(RemoteWebDriver driver) {
@@ -16,7 +17,7 @@ public class CartPage extends BasePage {
     }
 
     public void checkout() {
-        click(checkoutButton);
+        checkoutButton.click();
     }
 
     public void removeItemSuccessfully() {

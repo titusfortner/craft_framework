@@ -1,13 +1,9 @@
 package com.titusfortner.craft_framework.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.function.Function;
 
 public abstract class BasePage {
     protected RemoteWebDriver driver;
@@ -16,19 +12,5 @@ public abstract class BasePage {
     public BasePage(RemoteWebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-    }
-
-    public void sendKeys(By locator, String value) {
-        WebElement element = wait.until((d) -> d.findElement(locator));
-        wait.until((d) -> element.isDisplayed());
-        wait.until((d) -> element.isEnabled());
-        element.sendKeys(value);
-    }
-
-    public void click(By locator) {
-        WebElement element = wait.until((d) -> d.findElement(locator));
-        wait.until((d) -> element.isDisplayed());
-        wait.until((d) -> element.isEnabled());
-        driver.findElement(locator).click();
     }
 }
