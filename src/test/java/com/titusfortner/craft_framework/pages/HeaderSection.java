@@ -41,6 +41,8 @@ public class HeaderSection extends BasePage {
 
     private void logOut() {
         driver.findElement(menuButton).click();
-        driver.findElement(logoutLink).click();
+
+        WebElement logoutLink = wait.until((d) -> d.findElement(this.logoutLink));
+        logoutLink.click();
     }
 }

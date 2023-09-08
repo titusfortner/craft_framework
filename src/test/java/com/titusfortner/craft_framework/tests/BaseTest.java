@@ -5,9 +5,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.time.Duration;
 import java.util.Optional;
 
 public class BaseTest {
@@ -18,9 +16,7 @@ public class BaseTest {
 
     @BeforeEach
     public void setup() {
-        ChromeOptions options = new ChromeOptions();
-        options.setImplicitWaitTimeout(Duration.ofSeconds(1));
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
     }
 
     public class MyTestWatcher implements TestWatcher {
